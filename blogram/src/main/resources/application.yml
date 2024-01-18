@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+      
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3309/photogram?serverTimezone=Asia/Seoul
+    username: cos
+    password: cos1234
+    
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create #create \uc740 insert\ud55c\uac8c \uc0ac\ub77c\uc9d0 update\ub85c \ubcc0\uacbd #\ub098\uc911\uc5d0 \uc81c\ud488\ud654\ud560 \ub54c\ub294 None\uc73c\ub85c \ud574\uc11c \ub9cc\ub4e4\uc5b4\uc57c \ud568.
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    
+  security:
+    user:
+      name: test
+      password: 1234
