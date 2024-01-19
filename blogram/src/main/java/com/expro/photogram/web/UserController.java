@@ -24,4 +24,9 @@ public class UserController {
 		model.addAttribute("dto", dto);
 		return "user/profile";
 	}
+	
+	@GetMapping("/user/{id}/update")
+	public String update(@PathVariable int id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		return "user/update";
+	}
 }

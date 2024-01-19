@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.expro.photogram.domain.user.User;
 import com.expro.photogram.domain.user.UserRepository;
 import com.expro.photogram.handler.ex.CustomException;
+import com.expro.photogram.handler.ex.CustomValidationApiException;
 import com.expro.photogram.web.dto.user.UserProfileDto;
+import com.expro.photogram.web.dto.user.UserUpdateDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,5 +32,31 @@ public class UserService {
 		dto.setPageOwnerState(pageUserId == principalId);
 		
 		return dto;
+	}
+	
+	@Transactional
+	public User memberModify(int id, User user) {
+		User userEntity = userRepository.findById(id).orElseThrow(()->{
+			throw new CustomValidationApiException("찾을 수 없는 Id입니다.");
+		});
+		
+		
+		userEntity.setName(user.getName());
+		
+		String rawPassword = user.getPassword();
+		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+		userEntity.setPassword(user.getPassword());
+		
+		userEntity.setBio(user.getBio());
+		userEntity.setWebsite(user.getWebsite());
+		userEntity.setPhone(user.getPhone());
+		userEntity.setGender(user.getGender());
+		
+		if(userEntity.getPassword() == null) {
+			return userEntity;
+		}else {
+			userEntity.setPassword(encPassword);
+			return userEntity;
+		}
 	}
 }

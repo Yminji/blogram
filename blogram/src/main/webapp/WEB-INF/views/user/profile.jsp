@@ -70,7 +70,7 @@
 			<!--게시물컨 그리드배열-->
 			<div class="tab-1-content-inner">
 
-				<!--아이템들-->
+				<%-- <!--아이템들-->
 
 				<c:forEach var="image" items="${dto.user.images}"> <!-- EL표현식에서 변수명을 적으면 get함수가 자동호출된다. -->
 					<div class="img-box">
@@ -81,7 +81,7 @@
 							</a>
 						</div>
 					</div>
-				</c:forEach>
+				</c:forEach> --%>
 				
 				<!--아이템들end-->
 			</div>
