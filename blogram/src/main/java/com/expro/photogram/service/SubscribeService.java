@@ -15,7 +15,7 @@ public class SubscribeService {
 	private SubscribeRepository subscribeRepository;
 	
 	@Transactional
-	public void subscribeService(int fromUserId, int toUserId) {
+	public void memSubscribe(int fromUserId, int toUserId) {
 		try {
 			subscribeRepository.mSubscribe(fromUserId, toUserId);
 		}catch(Exception e) {
@@ -24,7 +24,7 @@ public class SubscribeService {
 	}
 	
 	@Transactional
-	public void unSubscribeService(int fromUserId, int toUserId) {
+	public void memUnSubscribe(int fromUserId, int toUserId) {
 		subscribeRepository.mUnSubscribe(fromUserId, toUserId);
 	}
 }
