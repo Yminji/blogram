@@ -14,5 +14,6 @@
 			</article>
 		</section>
 	</main>
+	<script src="/js/story.js"></script>
 </body>
 </html>
