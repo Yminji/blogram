@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.expro.photogram.domain.subscribe.SubscribeRepository;
 import com.expro.photogram.domain.user.User;
 import com.expro.photogram.domain.user.UserRepository;
 import com.expro.photogram.handler.ex.CustomApiException;
@@ -26,6 +27,7 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final SubscribeRepository subscribeRepository;
 	
 	@Value("${file.path}")
 	private String uploadFolder;
@@ -63,6 +65,13 @@ public class UserService {
 		
 		dto.setUser(userEntity);
 		dto.setPageOwnerState(pageUserId == principalId);
+		dto.setImageCount(userEntity.getImages().size());
+		
+		int subscribeState = subscribeRepository.mSubscribeState(principalId, pageUserId);
+		int subscribeCount = subscribeRepository.mSubscribeCount(pageUserId);
+		
+		dto.setSubscribeState(subscribeState == 1);
+		dto.setSubscribeCount(subscribeCount);
 		
 		return dto;
 	}	
