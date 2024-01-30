@@ -1,20 +1,18 @@
-package com.expro.photogram.domain.image;
+package com.expro.photogram.domain.likes;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.Transient;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import com.expro.photogram.domain.likes.Likes;
+import com.expro.photogram.domain.image.Image;
 import com.expro.photogram.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,27 +26,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Image {
+@Table(
+	uniqueConstraints = {
+			@UniqueConstraint(
+					name = "likes_uk",
+					columnNames = {"imageId", "userId"}
+			)
+	}
+)
+public class Likes {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String caption;
-	private String postImageUrl;
+	
+	@JoinColumn(name = "imageId")
+	@ManyToOne
+	private Image image;
 	
 	@JsonIgnoreProperties({"images"})
 	@JoinColumn(name = "userId")
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	private User user;
-	
-	@JsonIgnoreProperties({"image"})
-	@OneToMany(mappedBy = "image")
-	private List<Likes> likes;
-	
-	@Transient
-	private boolean likeState;
-	
-	@Transient
-	private int likeCount;
 	
 	private LocalDateTime createDate;
 	
