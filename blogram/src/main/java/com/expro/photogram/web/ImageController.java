@@ -1,11 +1,15 @@
 package com.expro.photogram.web;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.expro.photogram.cofig.auth.PrincipalDetails;
+import com.expro.photogram.domain.image.Image;
 import com.expro.photogram.handler.ex.CustomValidationException;
 import com.expro.photogram.service.ImageService;
 import com.expro.photogram.web.dto.image.ImageUploadDto;
@@ -37,5 +41,14 @@ public class ImageController {
 		imageService.imageUploadService(imageUploadDto, principalDetails);
 		
 		return "redirect:/user/"+principalDetails.getUser().getId();
+	}
+	
+	@GetMapping("/image/popular")
+	public String popular(Model model) {
+		List<Image> images = imageService.popularImage();
+		
+		model.addAttribute("images", images);
+		
+		return "image/popular";
 	}
 }
