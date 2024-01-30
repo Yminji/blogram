@@ -67,7 +67,7 @@ function getStoryItem(image){
 		</div>
 		<div id="storyCommentList-${image.id}">`;
 		
-	/*image.comments.forEach((comment)=>{
+	image.comments.forEach((comment)=>{
 		item += `<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
 				<p>
 					<b>${comment.user.username} :</b> ${comment.content}
@@ -83,7 +83,7 @@ function getStoryItem(image){
 	item += `
 		</div>`;
 	});
-	*/
+	
 	item+=`
 		</div>
 	
@@ -152,4 +152,61 @@ function toggleLike(imageId){
 			console.log("오류", error);
 		})
 	}
+}
+
+//댓글쓰기
+function addComment(imageId){
+	let commentInput = $(`#storyCommentInput-${imageId}`);
+	let commentList = $(`#storyCommentList-${imageId}`);
+	
+	let data = {
+		imageId:imageId,
+		content:commentInput.val()
+	}
+	
+	if(data.content === ""){
+		alert("댓글을 작성해주세요!");
+		return;
+	}
+	
+	$.ajax({
+		type:"post",
+		url:"/api/comment",
+		data:JSON.stringify(data),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json"
+	}).done(res=>{
+		let comment = res.data;
+		
+		let content = `
+		<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
+			<p>
+				<b>${comment.user.username} : </b>
+				${comment.content}
+			</p>
+			<button onclick = "deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
+		</div>
+		`;
+		
+		commentList.prepend(content);
+	}).fail(error=>{
+		console.log("오류", error.responseJSON.data.content);
+		alert(error.responseJSON.data.content);
+	});
+	
+	commentInput.val("");
+}
+
+//댓글 삭제
+function deleteComment(commentId){
+	$.ajax({
+		type:"delete",
+		url:`/api/comment/${commentId}`,
+		dataType:"json"
+	}).done(res=>{
+		console.log("성공", res);
+		$(`#storyCommentItem-${commentId}`).remove();
+	}).fail(error=>{
+		console.log("오류", error);
+	})
 }
