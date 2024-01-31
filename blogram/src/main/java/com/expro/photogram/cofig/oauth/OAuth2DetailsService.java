@@ -15,24 +15,40 @@ import com.expro.photogram.domain.user.User;
 import com.expro.photogram.domain.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class OAuth2DetailsService extends DefaultOAuth2UserService{
 	private final UserRepository userRepository;
 	
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
 		OAuth2User oauth2User = super.loadUser(userRequest);
+		log.info("getAttributes: {}", oauth2User.getAttributes());
 		
-		Map<String, Object> userInfo = oauth2User.getAttributes();
-		String username = "facebook_"+(String)userInfo.get("id");
+		OAuth2UserInfo oAuth2UserInfo = null;
+		
+		String provider = userRequest.getClientRegistration().getRegistrationId();
+		
+		if(provider.equals("kakao")) {
+			log.info("카카오 로그인 요청");
+			oAuth2UserInfo = new KakaoUserInfo((Map)oauth2User.getAttributes());
+		}
+		
+		String providerId = oAuth2UserInfo.getProviderId();
 		String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
-		String email = (String)userInfo.get("email");
-		String name = (String)userInfo.get("name");
+		String email = oAuth2UserInfo.getEmail();
+		if(email == null) {
+			email = " ";
+		}
+		String username = provider + "_" + providerId;
+		String name = oAuth2UserInfo.getName();
 		
 		User userEntity = userRepository.findByUsername(username);
 		
+		log.info(username);
 		if(userEntity == null) { //페이스북 최초 로그인
 			User user = User.builder()
 				.username(username)
