@@ -7,12 +7,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.expro.photogram.cofig.oauth.OAuth2DetailsService;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig{
+	
+	private final OAuth2DetailsService oauth2DetailsService;
 	
 	@Bean
 	BCryptPasswordEncoder encode() {
@@ -24,15 +28,18 @@ public class SecurityConfig{
 		http.csrf().disable(); 
 		
 		http.authorizeRequests()
-				/*
-				 * .antMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**",
-				 * "/api/**").authenticated() .anyRequest().permitAll()
-				 */
-					.and()
-					.formLogin() 
-					.loginPage("/auth/signin") 
-					.loginProcessingUrl("/auth/signin") 
-					.defaultSuccessUrl("/");
+			.antMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**","/api/**").authenticated()
+			.anyRequest().permitAll()	
+			.and()
+			.formLogin() 
+			.loginPage("/auth/signin") 
+			.loginProcessingUrl("/auth/signin") 
+			.defaultSuccessUrl("/")
+			.and()
+			.oauth2Login()
+			.userInfoEndpoint()
+			.userService(oauth2DetailsService);
+			
 					
 		return http.build();
 	}
