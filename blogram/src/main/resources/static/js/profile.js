@@ -1,12 +1,12 @@
 /**
-	유저 프로파일 페이지
-	1. 유저 프로파일 페이지 구독하기, 구독취소
+	유저 프로필 페이지
+	1. 유저 프로필 페이지 구독하기, 구독취소
 	2. 구독자 정보 모달 보기
 	3. 구독자 정보 모달에서 구독하기, 구독취소
 	4. 유저 프로픨 사진 변경
 	5. 사용자 정보 메뉴 열기, 닫기
 	6. 사용자 정보(회원정보, 로그아웃, 닫기) 모달
-	7. 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달
+	7. 사용자 프로필 이미지 메뉴(사진업로드, 취소) 모달
 	8. 구독자 정보 모달 닫기	
 **/
 
@@ -150,4 +150,24 @@ function modalImage(){
 function modalClose(){
 	$(".modal-subscribe").css("display", "none");
 	location.reload();
+}
+
+//이미지 삭제 
+function deleteImage(imageId){
+	$.ajax({
+		type:"delete",
+		url:`/api/image/${imageId}`,
+		dataType:"json"
+	}).done(res=>{
+		let imageCountStr = $(`#storyImageCount`).text();
+		let imageCount = Number(imageCountStr) - 1;
+		
+		$(`#storyImageCount`).text(imageCount);
+		
+		$(`#commentImage-${imageId}`).remove();
+		
+		alert("이미지 삭제 성공했습니다.");
+	}).fail(error=>{
+		console.log("오류", error);
+	})
 }

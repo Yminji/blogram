@@ -19,6 +19,7 @@ import com.expro.photogram.service.LikesService;
 import com.expro.photogram.web.dto.CMRespDto;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,6 +33,13 @@ public class ImageApiController {
 		Page<Image> images = imageService.imageStory(principalDetails.getUser().getId(), pageable);
 		
 		return new ResponseEntity<>(new CMRespDto<>(1, "성공", images), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/api/image/{imageId}")
+	public ResponseEntity<?> deleteImage(@PathVariable int imageId, @AuthenticationPrincipal PrincipalDetails principalDetails){
+		imageService.imageDelete(imageId, principalDetails.getUser().getId());
+		
+		return new ResponseEntity<>(new CMRespDto<>(1, "이미지 삭제 성공", null), HttpStatus.OK);
 	}
 	
 	@PostMapping("/api/image/{imageId}/likes")

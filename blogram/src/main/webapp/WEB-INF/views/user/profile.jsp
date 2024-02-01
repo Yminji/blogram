@@ -53,7 +53,7 @@
 
 			<div class="subscribe">
 				<ul>
-					<li><a href=""> 게시물<span>${dto.imageCount}</span>
+					<li><a href=""> 게시물<span id="storyImageCount">${dto.imageCount}</span>
 					</a></li>
 					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id});"> 구독정보<span>${dto.subscribeCount }</span>
 					</a></li>
@@ -81,13 +81,17 @@
 				<!--아이템들-->
 
 				<c:forEach var="image" items="${dto.user.images}"> <!-- EL표현식에서 변수명을 적으면 get함수가 자동호출된다. -->
-					<div class="img-box">
+					<div class="img-box" id="commentImage-${image.id}">
 						<a href=""> <img src="/upload/${image.postImageUrl }" />
 						</a>
-						<%-- <div class="comment">
-							<a href="#" class=""> <i class="fas fa-heart"></i><span>${image.likeCount}</span>
+						<div class="comment" >
+							<a href="#" > <i class="fas fa-heart" id="storyLikeIcon-${image.id}"></i><span id="storyLikeCount-${image.id}">${image.likeCount}</span>
 							</a>
-						</div> --%>
+							<c:if test="${image.user.id eq principal.user.id}">
+								<div><button onclick="deleteImage(${image.id})">버튼</button></div>
+							</c:if>
+						</div>
+						
 					</div>
 				</c:forEach>
 				
@@ -137,5 +141,5 @@
 
 
 <script src="/js/profile.js"></script>
-
+<script src="/js/story.js"></script>
 <%@ include file="../layout/footer.jsp"%>
