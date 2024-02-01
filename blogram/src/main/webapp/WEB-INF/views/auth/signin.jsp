@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" 
+integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 	<div class="container">
@@ -30,11 +33,20 @@
 	                   </div>
 	                   
 	                   <div class="login__facebook">
+	                   	<button onclick="javascript:location.href='/oauth2/authorization/kakao'">
+	                   		<i class="fa-solid fa-comments" style="color: #FFD43B;"></i>
+	                   		<span style="color:#FFD43B;">Kakao Login</span>
+	                   	</button>
 	                   	<button onclick="javascript:location.href='/oauth2/authorization/facebook'">
-	                   		<i class="feb fa-facebook-square"></i>
-	                   		<span>Facebook으로 로그인</span>
+	                   		<i class="fa-brands fa-facebook" style="color: #310ce9;"></i>
+	                   		<span>Facebook Login</span>
+	                   	</button>
+	                   	<button onclick="javascript:location.href='/oauth2/authorization/naver'">
+	                   		<i class="fa-solid fa-n" style="color: #109d54;"></i>
+	                   		<span style="color:#109d54;">Naver Login</span>
 	                   	</button>
 	                   </div>
+	                  
                    </div>
                    
                    <div class="login__register">

@@ -35,6 +35,12 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 		if(provider.equals("kakao")) {
 			log.info("카카오 로그인 요청");
 			oAuth2UserInfo = new KakaoUserInfo((Map)oauth2User.getAttributes());
+		}else if(provider.equals("facebook")) {
+			log.info("페이스북 로그인 요청");
+			oAuth2UserInfo = new FacebookUserInfo(oauth2User.getAttributes());
+		}else if(provider.equals("naver")) {
+			log.info("네이버 로그인 요청");
+			oAuth2UserInfo = new NaverUserInfo((Map)oauth2User.getAttributes().get("response"));
 		}
 		
 		String providerId = oAuth2UserInfo.getProviderId();
