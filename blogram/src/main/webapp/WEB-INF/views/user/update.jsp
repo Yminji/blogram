@@ -32,7 +32,7 @@
                         <div class="content-item__03 ">
                             <div class="item__title ">유저네임</div>
                             <div class="item__input ">
-                                <input type="text" name="username" placeholder="유저네임" value="${principal.user.username} " readonly="readonly " />
+                                <input type="text" name="username" placeholder="유저네임" value="${principal.user.username} " readonly="readonly" />
                             </div>
                         </div>
                         <div class="content-item__04 ">

@@ -152,22 +152,3 @@ function modalClose(){
 	location.reload();
 }
 
-//이미지 삭제 
-function deleteImage(imageId){
-	$.ajax({
-		type:"delete",
-		url:`/api/image/${imageId}`,
-		dataType:"json"
-	}).done(res=>{
-		let imageCountStr = $(`#storyImageCount`).text();
-		let imageCount = Number(imageCountStr) - 1;
-		
-		$(`#storyImageCount`).text(imageCount);
-		
-		$(`#commentImage-${imageId}`).remove();
-		
-		alert("이미지 삭제 성공했습니다.");
-	}).fail(error=>{
-		console.log("오류", error);
-	})
-}

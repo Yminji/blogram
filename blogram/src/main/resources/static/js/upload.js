@@ -9,7 +9,7 @@ function imageChoose(obj){
 	
 	let reader = new FileReader();
 	reader.onload = (e) => {
-		$("#imageUplodReview").attr("src", e.target.result);
+		$("#imageUploadPreview").attr("src", e.target.result);
 	}
 	
 	reader.readAsDataURL(f);

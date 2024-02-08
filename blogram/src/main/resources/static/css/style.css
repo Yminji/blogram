@@ -180,3 +180,9 @@ span {
   background: #0095f6 !important;
   color: #fff !important;
 }
+
+/*버튼 레드*/
+.cta.red {
+  background: #f15205!important;
+  color: #fff !important;
+}

@@ -82,15 +82,15 @@
 
 				<c:forEach var="image" items="${dto.user.images}"> <!-- EL표현식에서 변수명을 적으면 get함수가 자동호출된다. -->
 					<div class="img-box" id="commentImage-${image.id}">
-						<a href=""> <img src="/upload/${image.postImageUrl }" />
+						<a href="/image/board/${principal.user.id}/${image.id}"> <img src="/upload/${image.postImageUrl }" />
 						</a>
-						<div class="comment" >
+						<%-- <div class="comment" >
 							<a href="#" > <i class="fas fa-heart" id="storyLikeIcon-${image.id}"></i><span id="storyLikeCount-${image.id}">${image.likeCount}</span>
 							</a>
 							<c:if test="${image.user.id eq principal.user.id}">
 								<div><button onclick="deleteImage(${image.id})">버튼</button></div>
-							</c:if>
-						</div>
+							</c:if> 
+						</div>--%>
 						
 					</div>
 				</c:forEach>
