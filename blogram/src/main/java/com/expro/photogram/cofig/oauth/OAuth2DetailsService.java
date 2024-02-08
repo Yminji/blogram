@@ -1,6 +1,7 @@
 package com.expro.photogram.cofig.oauth;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -52,10 +53,14 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 		String username = provider + "_" + providerId;
 		String name = oAuth2UserInfo.getName();
 		
+		if(userRepository.existsByName(name)) {
+			name = makeUniqueName(name);
+		}
+		
 		User userEntity = userRepository.findByUsername(username);
 		
 		log.info(username);
-		if(userEntity == null) { //페이스북 최초 로그인
+		if(userEntity == null) { //최초 로그인
 			User user = User.builder()
 				.username(username)
 				.password(password)
@@ -68,7 +73,24 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 		}else {
 			return new PrincipalDetails(userEntity, oauth2User.getAttributes());
 		}
+
+	}
+	
+	private String makeUniqueName(String name) {
+		String uniqueName = name;
+		Random random = new Random();
 		
+		String randomString = random.ints(48, 123)
+				.filter(i -> (i < 58 || (i >= 65 && i < 91) || (i >= 97 && i < 123)))
+				.limit(3)
+				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+				.toString();
 		
+		uniqueName += "-" + randomString;
+		
+		if(userRepository.existsByName(uniqueName))
+			return makeUniqueName(name);
+		else
+			return uniqueName;
 	}
 }
