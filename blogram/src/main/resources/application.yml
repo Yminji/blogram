@@ -67,7 +67,8 @@ spring:
             redirect-uri: http://localhost:8080/login/oauth2/code/naver
             
         
-        provider:          kakao:
+        provider:
+          kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me

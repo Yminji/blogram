@@ -1,0 +1,34 @@
+name: Deploy Blogram
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: 11
+        distribution: zulu
+
+    - name: Set up Facebook OAuth2 Client Secret
+      run: echo "FACEBOOK_SECRET_KEY=${{secrets.FACEBOOK_SECRET_KEY}}" >> $GITHUB_ENV
+
+    - name: Set up Kakao OAuth2 Client Secret
+      run: echo "KAKAO_SECRET_KEY=${{secrets.KAKAO_SECRET_KEY}}" >> $GITHUB_ENV
+
+    - name: Set up Naver OAuth2 Client Secret
+      run: echo "Naver_SECRET_KEY=${{secrets.NAVER_SECRET_KEY}}" >> $GITHUB_ENV
+
+    - name: Build with Maven
+      run: mvn clean install
+
+    

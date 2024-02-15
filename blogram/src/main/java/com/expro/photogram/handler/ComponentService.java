@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ComponentService {
 	
-	@Value("${oauth2.client.registration.facebook.client-secret}")
-	private String facebookClientSecret;
+	@Value("${spring.security.oauth2.client.registration.facebook.client-secret}")
+	private String facebookSecretKey;
 	
-	@Value("${oauth2.client.registration.kakao.client-secret")
-	private String kakaoClientSecret;
+	@Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
+	private String kakaoSecretKey;
 	
-	@Value("${oauth2.client.registration.naver.client-secret")
-	private String naverClientSecret;
+	@Value("${spring.security.oauth2.client.registration.naver.client-secret}")
+	private String naverSecretKey;
 }
