@@ -18,7 +18,7 @@
 					<div class="login__form">
 						<h1><img src="/images/logo.jpg" alt=""></h1>
 						
-						<form class="login__input" action="/auth/signup" method="post">
+						<form class="login__input" action="/auth/signup" method="post" onsubmit="return handleSignup()">
 							<input type="text" name="username" placeholder="유저네임" required="required"/>
 							<input type="password" name="password" placeholder="패스워드" required="required"/>
 							<input type="email" name="email" placeholder="이메일" required="required"/>
@@ -36,5 +36,12 @@
 			</section>
 		</main>
 	</div>
+	
+	<script type="text/javascript">
+		function handleSignup(){
+			alert("회원가입이 성공적으로 완료되었습니다.");
+			return true;
+		}
+	</script>
 </body>
 </html>

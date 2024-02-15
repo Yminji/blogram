@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BlogramApplication<blogram>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.expro.photogram.BlogramApplication",
+            "projectName": "blogram",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

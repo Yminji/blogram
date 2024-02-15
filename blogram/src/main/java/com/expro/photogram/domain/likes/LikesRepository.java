@@ -11,5 +11,5 @@ public interface LikesRepository extends JpaRepository<Likes, Integer>{
 	
 	@Modifying
 	@Query(value = "DELETE FROM likes WHERE imageId = :imageId AND userId = :principalId", nativeQuery = true)
-	int mUnLikes(int imageId, int principalId);
+	void mUnLikes(int imageId, int principalId);
 }

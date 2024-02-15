@@ -1,9 +1,10 @@
 package com.expro.photogram.web.dto.auth;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import com.expro.photogram.domain.user.User;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
