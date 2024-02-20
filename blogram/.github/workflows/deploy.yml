@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,15 +18,20 @@ jobs:
       with:
         java-version: 11
         distribution: zulu
-
+    
+    - name: Build application
+      run: |
+        cd blogram/target
+        java -jar blogram-0.0.1-SNAPSHOT.war
+    
     - name: Set up Facebook OAuth2 Client Secret
-      run: echo "FACEBOOK_SECRET_KEY=${{secrets.FACEBOOK_SECRET_KEY}}" >> $GITHUB_ENV
+      run: echo "FACEBOOK_SECRET_KEY=${{ secrets.FACEBOOK_SECRET_KEY }}" >> $GITHUB_ENV
 
     - name: Set up Kakao OAuth2 Client Secret
-      run: echo "KAKAO_SECRET_KEY=${{secrets.KAKAO_SECRET_KEY}}" >> $GITHUB_ENV
+      run: echo "KAKAO_SECRET_KEY=${{ secrets.KAKAO_SECRET_KEY }}" >> $GITHUB_ENV
 
     - name: Set up Naver OAuth2 Client Secret
-      run: echo "Naver_SECRET_KEY=${{secrets.NAVER_SECRET_KEY}}" >> $GITHUB_ENV
+      run: echo "Naver_SECRET_KEY=${{ secrets.NAVER_SECRET_KEY }}" >> $GITHUB_ENV
 
     - name: Build with Maven
       run: mvn clean install

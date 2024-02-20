@@ -46,6 +46,19 @@
 			<version>9.0.43</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<!-- JSTL -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -113,12 +126,19 @@
 
 	</dependencies>
 
+	<packaging>war</packaging>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				<archive>
+                    <manifest>
+                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                    </manifest>
+                </archive>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
